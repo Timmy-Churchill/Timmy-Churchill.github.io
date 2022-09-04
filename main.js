@@ -1,6 +1,5 @@
 import * as THREE from 'https://unpkg.com/three/build/three.module.js';
-import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
-import {FirstPersonControls} from 'three/examples/jsm/controls/FirstPersonControls'
+import {FirstPersonControls} from "/Users/timothychurchill/Documents/code/JS/threeJS/myWebsite/node_modules/three/examples/jsm/controls/FirstPersonControls";
 
 
 
@@ -46,7 +45,7 @@ document.body.appendChild( renderer.domElement );
 ////////////////////////////////////////////////////
 //Making the sun shape
 const sunGeometry = new THREE.SphereGeometry(4, 24, 24);
-const sunTexture = new THREE.TextureLoader().load('images/theSUN.jpg');
+const sunTexture = new THREE.TextureLoader().load('/Users/timothychurchill/Documents/code/JS/threeJS/myWebsite/images/theSUN.jpg');
 const sunMaterial = new THREE.MeshPhongMaterial({map:sunTexture});
 const sun = new THREE.Mesh(sunGeometry, sunMaterial);
 sun.position.set(0, 0, 0);
@@ -68,7 +67,7 @@ Array(400).fill().forEach(makeStar);
 
 //making the planets
 const primerGeometry = new THREE.SphereGeometry(1, 24, 24);
-const primerTexture = new THREE.TextureLoader().load('images/planetTextures/primerPlanet.jpg');
+const primerTexture = new THREE.TextureLoader().load('/Users/timothychurchill/Documents/code/JS/threeJS/myWebsite/images/planetTextures/primerPlanet.jpg');
 const primerMaterial = new THREE.MeshBasicMaterial({map:primerTexture});
 const primerPlanet = new THREE.Mesh(primerGeometry, primerMaterial);
 primerPlanet.position.set(20, 0, 0);
@@ -77,7 +76,7 @@ scene.add(primerPlanet);
 //Making the primer Planet
 let primerPlanetX = 1000;
 const planetSurfaceGeometry = new THREE.PlaneGeometry(200, 200);
-const primerPlanetSurfaceTexture = new THREE.TextureLoader().load('images/planetTextures/primerPlanet.jpg');
+const primerPlanetSurfaceTexture = new THREE.TextureLoader().load('/Users/timothychurchill/Documents/code/JS/threeJS/myWebsite/images/planetTextures/primerPlanet.jpg');
 const primerPlanetSurfaceMaterial = new THREE.MeshBasicMaterial({map:primerPlanetSurfaceTexture});
 const primerPlanetSurface = new THREE.Mesh(planetSurfaceGeometry, primerPlanetSurfaceMaterial);
 primerPlanetSurface.position.set(primerPlanetX , 0, 0);
@@ -87,14 +86,14 @@ scene.add(primerPlanetSurface);
 
 //return button
 const primerHomeGeometry1 = new THREE.BoxGeometry(6, 5, 6);
-const primerHomeTexture1 = new THREE.TextureLoader().load('images/brickWall.jpg');
+const primerHomeTexture1 = new THREE.TextureLoader().load('/Users/timothychurchill/Documents/code/JS/threeJS/myWebsite/images/brickWall.jpg');
 const primerHomeMaterial1 = new THREE.MeshBasicMaterial({map:primerHomeTexture1});
 const primerHomePlanet1 = new THREE.Mesh(primerHomeGeometry1, primerHomeMaterial1);
 primerHomePlanet1.position.set(0+primerPlanetX, 3, 0);
 scene.add(primerHomePlanet1);
 
 const primerHomeGeometry2 = new THREE.ConeGeometry(6, 3, 4, 1, false, Math.PI/4);
-const primerHomeTexture2 = new THREE.TextureLoader().load('images/shingles.jpg');
+const primerHomeTexture2 = new THREE.TextureLoader().load('/Users/timothychurchill/Documents/code/JS/threeJS/myWebsite/images/shingles.jpg');
 const primerHomeMaterial2 = new THREE.MeshBasicMaterial({map:primerHomeTexture2});
 const primerHomePlanet2 = new THREE.Mesh(primerHomeGeometry2, primerHomeMaterial2);
 primerHomePlanet2.position.set(0+primerPlanetX, 6.5, 0);
