@@ -1,6 +1,7 @@
 import * as THREE from 'https://unpkg.com/three/build/three.module.js';
-//import * as FirstPersonControls from "https://unpkg.com/three@0.144.0/examples/js/controls/FirstPersonControls.js";
-import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls';
+// import * as FirstPersonControls from "https://unpkg.com/three@0.144.0/examples/js/controls/FirstPersonControls.js";
+import {FirstPersonControls} from "https://github.com/mrdoob/three.js/blob/master/examples/jsm/controls/FirstPersonControls.js";
+//import { FirstPersonControls } from '/myWebsite/three/examples/jsm/controls/FirstPersonControls';
 
 
 
@@ -148,12 +149,12 @@ scene.add(gridHelper);
 
 
 
-const controls = new FirstPersonControls(camera, renderer.domElement);
+// const controls = new FirstPersonControls(camera, renderer.domElement);
 
 
-controls.lookSpeed  =.003;
-controls.autoForward = false;
-controls.movementSpeed = 1;
+// controls.lookSpeed  =.003;
+// controls.autoForward = false;
+// controls.movementSpeed = 1;
 
 
 
@@ -222,20 +223,20 @@ const animate = function () {
     primerPlanet.position.y = 5*(Math.sin(starBlinker/100));
     primerPlanet.position.z = 20*(Math.sin(starBlinker/100));
 
-    if (controls.mouseDragOn == true){
-      setTimeout(() => { 
-        controls.activeLook = true;
-        controls.movementSpeed = 0;
-       }, 1000);
+    // if (controls.mouseDragOn == true){
+    //   setTimeout(() => { 
+    //     controls.activeLook = true;
+    //     controls.movementSpeed = 0;
+    //    }, 1000);
       
       
-    } else {
-      controls.activeLook = false
-      controls.movementSpeed = 1;
-    }
+    // } else {
+    //   controls.activeLook = false
+    //   controls.movementSpeed = 1;
+    // }
     
-    controls.handleResize ()
-    controls.update(1.0);
+    // controls.handleResize ()
+    // controls.update(1.0);
     requestAnimationFrame( animate );
     renderer.render( scene, camera );
 };
