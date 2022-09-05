@@ -1,6 +1,6 @@
 import * as THREE from 'https://unpkg.com/three/build/three.module.js';
 // // import * as FirstPersonControls from "https://unpkg.com/three@0.144.0/examples/js/controls/FirstPersonControls.js";
-import {FirstPersonControls} from "/node_modules/three/examples/jsm/controls/FirstPersonControls";
+import {FirstPersonControls} from "/js/FirstPersonControls";
 // //import { FirstPersonControls } from '/myWebsite/three/examples/jsm/controls/FirstPersonControls';
 // const THREE = require('three.js');
 
