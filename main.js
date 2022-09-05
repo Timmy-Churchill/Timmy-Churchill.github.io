@@ -1,5 +1,5 @@
 import * as THREE from 'https://unpkg.com/three/build/three.module.js';
-import {FirstPersonControls} from "/FirstPersonControls";
+import {FirstPersonControls} from "./FirstPersonControls"
 
 
 
