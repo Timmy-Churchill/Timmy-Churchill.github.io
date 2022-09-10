@@ -1,5 +1,6 @@
 import * as THREE from 'https://unpkg.com/three/build/three.module.js';
-import {FirstPersonControls} from "./FirstPersonControls.js"
+import { Vector3 } from 'three';
+import {FlyControls} from "./FlyControls"
 
 
 
@@ -19,7 +20,7 @@ let moveRate = 1;
 let starBlinker = 0;
 camera.position.x = 0
 camera.position.y = 20
-camera.position.z = -30
+camera.position.z = 100
 
 //renderer
 const renderer = new THREE.WebGLRenderer();
@@ -27,11 +28,10 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
 
-
-
-
-
-
+function random(low, high){
+  const range = high-low;
+  return (Math.floor(Math.random()*(range+1)) + low)
+}
 
 ////////////////////////////////////////////////////
 //                    Shapes                      //
@@ -67,7 +67,7 @@ primerPlanet.position.set(20, 0, 0);
 scene.add(primerPlanet);
 
 //Making the primer Planet
-let primerPlanetX = 1000;
+let primerPlanetX = 3000;
 const planetSurfaceGeometry = new THREE.PlaneGeometry(200, 200);
 const primerPlanetSurfaceTexture = new THREE.TextureLoader().load('images/planetTextures/primerPlanet.jpg');
 const primerPlanetSurfaceMaterial = new THREE.MeshBasicMaterial({map:primerPlanetSurfaceTexture});
@@ -94,13 +94,14 @@ scene.add(primerHomePlanet2);
 //return button finished
 
 
-
-
-
-
-
-
-
+const thisgeo = new THREE.BoxGeometry(2, 2, 5);
+const rgbMaterial = new THREE.MeshNormalMaterial();
+let boxesList = []
+for (let i = 0; i < 40; i++) {
+  boxesList[i] = new THREE.Mesh(thisgeo, rgbMaterial);
+  boxesList[i].position.set(random(-100, 100), random(-100, 100), random(-100, 100))
+  scene.add(boxesList[i])
+}
 
 
 
@@ -109,10 +110,12 @@ scene.add(primerHomePlanet2);
 //                    Lights                      //
 ////////////////////////////////////////////////////
 //mainPointLight
-const sunPointLight = new THREE.AmbientLight(0xffffff, 0.7, 0, 1.4);
-sunPointLight.position.set(0,0,0);
-scene.add(sunPointLight);
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5, 0);
+scene.add(ambientLight);
 
+const pointLight = new THREE.PointLight(0xffffff, 1, 0, 1.2);
+pointLight.position.set(50, 40, 0);
+scene.add(pointLight)
 
       
 
@@ -136,58 +139,16 @@ scene.add(gridHelper);
 
 
 ////////////////////////////////////////////////////
-//            First Person Controls               //
+//            Fly Controls               //
 ////////////////////////////////////////////////////
 
 
 
-const controls = new FirstPersonControls(camera, renderer.domElement);
+const controls = new FlyControls(camera, renderer.domElement);
 
 
-controls.lookSpeed  =.003;
-controls.autoForward = false;
-controls.movementSpeed = 1;
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ////////////////////////////////////////////////////
-// //                  mouse move                    //
-// ////////////////////////////////////////////////////
-
-
-// const mouse = new THREE.Vector2();
-// const target = new THREE.Vector2();
-// const windowHalf = new THREE.Vector2( window.innerWidth / 2, window.innerHeight / 2 );
-
-
-// document.addEventListener( 'mousemove', onMouseMove );
-// document.addEventListener( 'wheel', onMouseWheel );
-
-
-// function onMouseMove( event ) {
-
-// 	mouse.x = ( event.clientX - windowHalf.x );
-// 	mouse.y = ( event.clientY - windowHalf.y );
-// }
-
-// function onMouseWheel( event ) {
-
-//   camera.position.z += event.deltaY * 0.1; // move camera along z-axis
-
-// }
-
-
-
+controls.movementSpeed = 0.3;
+controls.dragToLook = true;
 
 
 
@@ -208,34 +169,29 @@ controls.movementSpeed = 1;
 ////////////////////////////////////////////////////
 
 const animate = function () {
-    
+
+    const cameraScaleFactor = 1.2
+    for (let i = 0; i < 40; i++) {
+      
+      const cameraHalfX = camera.position.x/cameraScaleFactor
+      const cameraHalfY = camera.position.y/cameraScaleFactor
+      const cameraHalfZ = camera.position.z/cameraScaleFactor
+      boxesList[i].lookAt(new Vector3(cameraHalfX, cameraHalfY, cameraHalfZ));
+    }
     
     starBlinker += 1;
     primerPlanet.position.x = 20*(Math.cos(starBlinker/100-0.4));
     primerPlanet.position.y = 5*(Math.sin(starBlinker/100));
     primerPlanet.position.z = 20*(Math.sin(starBlinker/100));
 
-    if (controls.mouseDragOn == true){
-      setTimeout(() => { 
-        controls.activeLook = true;
-        controls.movementSpeed = 0;
-       }, 1000);
-      
-      
-    } else {
-      controls.activeLook = false
-      controls.movementSpeed = 1;
-    }
-    
-    controls.handleResize ()
-    controls.update(1.0);
-    requestAnimationFrame( animate );
-    renderer.render( scene, camera );
+    controls.update(2);
+    requestAnimationFrame(animate);
+    renderer.render(scene, camera);
 };
 
 animate();
 
-//new commit
+
 
 
 
@@ -289,30 +245,14 @@ animate();
 //   if (event.defaultPrevented) {
 //     return;
 //   }
-//   if (event.code === "ArrowUp"){
+//   if (event.code === "Space"){
 //       // Handle "up"
-//       camera.rotation.x += 0.05
+//       manuallyPan("y", 1, 5)
 //       // manuallyPan("y", 1, moveRate)
 //   } else if (event.code === "ArrowDown"){
 //       // Handle "backward"
 //       camera.rotation.x -= 0.05
 //       //manuallyPan("y", -1, moveRate)
-//   } else if (event.code === "ArrowLeft"){
-//     // Handle "up"
-//     camera.rotation.y += 0.05
-//     // manuallyPan("y", 1, moveRate)
-//   } else if (event.code === "ArrowRight"){
-//       // Handle "backward"
-//       camera.rotation.y -= 0.05
-//       //manuallyPan("y", -1, moveRate)
-//   } else if (event.code === "KeyW"){
-//     // Handle "up"
-//     camera.rotation.z += 0.05
-//     // manuallyPan("y", 1, moveRate)
-//   } else if (event.code === "KeyS"){
-//     // Handle "backward"
-//     camera.rotation.z -= 0.05
-//     //manuallyPan("y", -1, moveRate)
 //   }
 // });
 
@@ -355,9 +295,10 @@ function onClick( event ) {
 	for ( let i = 0; i < intersects.length; i ++ ) {
 
     if (intersects[i].object == primerPlanet){
-
-      camera.position.x += 1000;
-      controls.target.x += 1000;
+      
+      camera.position.x += primerPlanetX;
+      controls.target.x += primerPlanetX;
+    
 
 
 	} else if (intersects[i].object == sun){
@@ -384,20 +325,33 @@ window.addEventListener( 'click', onClick );
 /*
 
 shortTerm:
-
+ 1) skybox
 
 
 longterm:
-1) make a list of projects I want to display (below)
-2) for each project
+1) for each project
+
   a) make the planet itself, fixing orbit, texture, and adding another if clause above
   b) make the scene it transports you to: probably move the camera super far away, add a new background, and try the box surrounding idea from http://stemkoski.github.io/Three.js/
   c) make a button to get back to home
   d) maybe make a character of some sort, that animates as you move and is always in the screen (3rd person pov) stu is a good concept, with one wheel
-3) make the sun link to a more traditional resume list, maybe add a picture of me somewhere (possibly replacing the sun)
+  e) make a skybox and world
+
+
+2) make the sun link to a more traditional resume list, maybe add a picture of me somewhere (possibly replacing the sun)
 
 
 
+
+1) series of game engines/solvers (chess, farkle, wordle)
+2) 23 cubed 
+3) Weather app
+4) Neruel net (try to get the baseball thing working)
+5) Academic History
+6) Nobles app
+7) Fun facts
+8) Sports
+9) contact me (instagram, email, github, linkedin)
 */
 
 
