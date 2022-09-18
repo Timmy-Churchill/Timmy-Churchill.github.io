@@ -11,11 +11,11 @@ import {FlyControls} from "./FlyControls"
 //scene and scene background
 const scene = new THREE.Scene();
 const spaceTexture = new THREE.TextureLoader().load('images/SpacePexels.jpg');
-scene.background = spaceTexture;
+//scene.background = spaceTexture;
 
 
 //camera, set camera position above and behind center
-const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 2000 );
 let moveRate = 1;
 let starBlinker = 0;
 camera.position.x = 0
@@ -68,13 +68,6 @@ scene.add(primerPlanet);
 
 //Making the primer Planet
 let primerPlanetX = 3000;
-const planetSurfaceGeometry = new THREE.PlaneGeometry(200, 200);
-const primerPlanetSurfaceTexture = new THREE.TextureLoader().load('images/planetTextures/primerPlanet.jpg');
-const primerPlanetSurfaceMaterial = new THREE.MeshBasicMaterial({map:primerPlanetSurfaceTexture});
-const primerPlanetSurface = new THREE.Mesh(planetSurfaceGeometry, primerPlanetSurfaceMaterial);
-primerPlanetSurface.position.set(primerPlanetX , 0, 0);
-primerPlanetSurface.rotation.x = -Math.PI / 2
-scene.add(primerPlanetSurface);
 
 
 //return button
@@ -154,12 +147,49 @@ controls.dragToLook = true;
 
 
 
+const spiresPrefix = "images/dawnmountain-";
+const insideDirections  = ["xpos", "xneg", "ypos", "yneg", "zpos", "zneg"];
+const pngSuffix = ".png";
+const spiresGeometry = new THREE.BoxGeometry( 500, 500, 500 );	
+
+let materialArraySpires = [];
+
+for (let i = 0; i < 6; i++){
+  const spiresSideTexture = new THREE.MeshBasicMaterial({
+    map: new THREE.TextureLoader().load( spiresPrefix + insideDirections[i] + pngSuffix ),
+    side: THREE.BackSide
+  })
+
+  materialArraySpires.push(spiresSideTexture);
+}
+
+
+const spiresBox = new THREE.Mesh( spiresGeometry, materialArraySpires );
+scene.add( spiresBox );
 
 
 
 
+const mountainPrefix = "images/mountains-";
+const jpgSuffix = ".jpg";
+const mountainGeometry = new THREE.BoxGeometry( 2000, 2000, 2000 );	
+
+let materialArrayMountains = [];
+
+for (let i = 0; i < 6; i++){
+  const mountainSideTexture = new THREE.MeshBasicMaterial({
+    map: new THREE.TextureLoader().load( mountainPrefix + insideDirections[i] + jpgSuffix ),
+    side: THREE.BackSide
+  })
+
+  materialArrayMountains.push(mountainSideTexture);
+}
 
 
+const mountainBox = new THREE.Mesh( mountainGeometry, materialArrayMountains );
+scene.add( mountainBox );
+
+mountainBox.position.set(primerPlanetX, 0, 0);
 
 
 
