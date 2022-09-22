@@ -1,5 +1,4 @@
 import * as THREE from 'https://unpkg.com/three/build/three.module.js';
-import { Vector3 } from 'three';
 import {FlyControls} from "./FlyControls"
 
 
@@ -206,7 +205,7 @@ const animate = function () {
       const cameraHalfX = camera.position.x/cameraScaleFactor
       const cameraHalfY = camera.position.y/cameraScaleFactor
       const cameraHalfZ = camera.position.z/cameraScaleFactor
-      boxesList[i].lookAt(new Vector3(cameraHalfX, cameraHalfY, cameraHalfZ));
+      boxesList[i].lookAt(new THREE.Vector3(cameraHalfX, cameraHalfY, cameraHalfZ));
     }
     
     starBlinker += 1;
