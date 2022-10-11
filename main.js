@@ -1,5 +1,5 @@
 import * as THREE from 'https://unpkg.com/three/build/three.module.js';
-import {FlyControls} from "./FlyControls"
+import {FlyControls} from "./FlyControls.js"
 
 
 
@@ -116,12 +116,13 @@ for (let i = 0; i < 40; i++) {
 //                    Lights                      //
 ////////////////////////////////////////////////////
 //mainPointLight
-// const ambientLight = new THREE.AmbientLight(0xffffff, 0.5, 0);
-// scene.add(ambientLight);
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5, 0);
+scene.add(ambientLight);
 
 
-const color = 0xffffff
-const strength = 1
+
+const color = 0xFFFCC9
+const strength = 0.7
 const distance = 0
 const decay = 1
 const distanceFromSun = 10
