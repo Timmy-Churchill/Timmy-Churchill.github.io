@@ -57,10 +57,11 @@ function makeStar(){
 
 Array(400).fill().forEach(makeStar);
 
+
 //making the planets
 const primerGeometry = new THREE.SphereGeometry(1, 24, 24);
 const primerTexture = new THREE.TextureLoader().load('images/planetTextures/primerPlanet.jpg');
-const primerMaterial = new THREE.MeshBasicMaterial({map:primerTexture});
+const primerMaterial = new THREE.MeshStandardMaterial({map:primerTexture});
 const primerPlanet = new THREE.Mesh(primerGeometry, primerMaterial);
 primerPlanet.position.set(20, 0, 0);
 scene.add(primerPlanet);
@@ -69,24 +70,37 @@ scene.add(primerPlanet);
 let primerPlanetX = 3000;
 
 
+//making the 23cubed planet
+const twentythreeGeometry = new THREE.SphereGeometry(3, 24, 24);
+const twentythreeTexture = new THREE.TextureLoader().load('images/planetTextures/23cubed.png');
+const twentythreeMaterial = new THREE.MeshStandardMaterial({map:twentythreeTexture});
+const twentythreePlanet = new THREE.Mesh(twentythreeGeometry, twentythreeMaterial);
+twentythreePlanet.position.set(0, 0, 20);
+scene.add(twentythreePlanet);
+
+//Making the primer Planet
+let twentythreePlanetX = -3000;
+
+
+
 //return button
 const primerHomeGeometry1 = new THREE.BoxGeometry(6, 5, 6);
 const primerHomeTexture1 = new THREE.TextureLoader().load('images/brickWall.jpg');
-const primerHomeMaterial1 = new THREE.MeshBasicMaterial({map:primerHomeTexture1});
+const primerHomeMaterial1 = new THREE.MeshStandardMaterial({map:primerHomeTexture1});
 const primerHomePlanet1 = new THREE.Mesh(primerHomeGeometry1, primerHomeMaterial1);
 primerHomePlanet1.position.set(0+primerPlanetX, 3, 0);
 scene.add(primerHomePlanet1);
 
 const primerHomeGeometry2 = new THREE.ConeGeometry(6, 3, 4, 1, false, Math.PI/4);
 const primerHomeTexture2 = new THREE.TextureLoader().load('images/shingles.jpg');
-const primerHomeMaterial2 = new THREE.MeshBasicMaterial({map:primerHomeTexture2});
+const primerHomeMaterial2 = new THREE.MeshStandardMaterial({map:primerHomeTexture2});
 const primerHomePlanet2 = new THREE.Mesh(primerHomeGeometry2, primerHomeMaterial2);
 primerHomePlanet2.position.set(0+primerPlanetX, 6.5, 0);
 scene.add(primerHomePlanet2);
 //return button finished
 
 
-const thisgeo = new THREE.BoxGeometry(2, 2, 5);
+const thisgeo = new THREE.BoxGeometry(1, 1, 1.618);
 const rgbMaterial = new THREE.MeshNormalMaterial();
 let boxesList = []
 for (let i = 0; i < 40; i++) {
@@ -102,14 +116,55 @@ for (let i = 0; i < 40; i++) {
 //                    Lights                      //
 ////////////////////////////////////////////////////
 //mainPointLight
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.5, 0);
-scene.add(ambientLight);
+// const ambientLight = new THREE.AmbientLight(0xffffff, 0.5, 0);
+// scene.add(ambientLight);
 
-const pointLight = new THREE.PointLight(0xffffff, 1, 0, 1.2);
-pointLight.position.set(50, 40, 0);
-scene.add(pointLight)
 
-      
+const color = 0xffffff
+const strength = 1
+const distance = 0
+const decay = 1
+const distanceFromSun = 10
+
+const pointLight1 = new THREE.PointLight(color, strength, distance, decay);
+pointLight1.position.set(distanceFromSun, 0, 0);
+scene.add(pointLight1)
+const lightHelper1 = new THREE.PointLightHelper(pointLight1)
+scene.add(lightHelper1)
+
+
+const pointLight2 = new THREE.PointLight(color, strength, distance, decay);
+pointLight2.position.set(-distanceFromSun, 0, 0);
+scene.add(pointLight2)
+const lightHelper2 = new THREE.PointLightHelper(pointLight2)
+scene.add(lightHelper2)
+
+
+const pointLight3 = new THREE.PointLight(color, strength, distance, decay);
+pointLight3.position.set(0, distanceFromSun, 0);
+scene.add(pointLight3)
+const lightHelper3 = new THREE.PointLightHelper(pointLight3)
+scene.add(lightHelper3)
+
+
+const pointLight4 = new THREE.PointLight(color, strength, distance, decay);
+pointLight4.position.set(0, -distanceFromSun, 0);
+scene.add(pointLight4)
+const lightHelper4 = new THREE.PointLightHelper(pointLight4)
+scene.add(lightHelper4)
+
+
+const pointLight5 = new THREE.PointLight(color, strength, distance, decay);
+pointLight5.position.set(0, 0, distanceFromSun);
+scene.add(pointLight5)
+const lightHelper5 = new THREE.PointLightHelper(pointLight5)
+scene.add(lightHelper5)
+
+const pointLight6 = new THREE.PointLight(color, strength, distance, decay);
+pointLight6.position.set(0, 0, -distanceFromSun);
+scene.add(pointLight6)
+const lightHelper6 = new THREE.PointLightHelper(pointLight6)
+scene.add(lightHelper6)
 
 
 
@@ -146,49 +201,49 @@ controls.dragToLook = true;
 
 
 
-const spiresPrefix = "images/dawnmountain-";
-const insideDirections  = ["xpos", "xneg", "ypos", "yneg", "zpos", "zneg"];
-const pngSuffix = ".png";
-const spiresGeometry = new THREE.BoxGeometry( 500, 500, 500 );	
+// const spiresPrefix = "images/dawnmountain-";
+// const insideDirections  = ["xpos", "xneg", "ypos", "yneg", "zpos", "zneg"];
+// const pngSuffix = ".png";
+// const spiresGeometry = new THREE.BoxGeometry( 500, 500, 500 );	
 
-let materialArraySpires = [];
+// let materialArraySpires = [];
 
-for (let i = 0; i < 6; i++){
-  const spiresSideTexture = new THREE.MeshBasicMaterial({
-    map: new THREE.TextureLoader().load( spiresPrefix + insideDirections[i] + pngSuffix ),
-    side: THREE.BackSide
-  })
+// for (let i = 0; i < 6; i++){
+//   const spiresSideTexture = new THREE.MeshBasicMaterial({
+//     map: new THREE.TextureLoader().load( spiresPrefix + insideDirections[i] + pngSuffix ),
+//     side: THREE.BackSide
+//   })
 
-  materialArraySpires.push(spiresSideTexture);
-}
-
-
-const spiresBox = new THREE.Mesh( spiresGeometry, materialArraySpires );
-scene.add( spiresBox );
+//   materialArraySpires.push(spiresSideTexture);
+// }
 
 
+// const spiresBox = new THREE.Mesh( spiresGeometry, materialArraySpires );
+// scene.add( spiresBox );
 
 
-const mountainPrefix = "images/mountains-";
-const jpgSuffix = ".jpg";
-const mountainGeometry = new THREE.BoxGeometry( 2000, 2000, 2000 );	
-
-let materialArrayMountains = [];
-
-for (let i = 0; i < 6; i++){
-  const mountainSideTexture = new THREE.MeshBasicMaterial({
-    map: new THREE.TextureLoader().load( mountainPrefix + insideDirections[i] + jpgSuffix ),
-    side: THREE.BackSide
-  })
-
-  materialArrayMountains.push(mountainSideTexture);
-}
 
 
-const mountainBox = new THREE.Mesh( mountainGeometry, materialArrayMountains );
-scene.add( mountainBox );
+// const mountainPrefix = "images/mountains-";
+// const jpgSuffix = ".jpg";
+// const mountainGeometry = new THREE.BoxGeometry( 2000, 2000, 2000 );	
 
-mountainBox.position.set(primerPlanetX, 0, 0);
+// let materialArrayMountains = [];
+
+// for (let i = 0; i < 6; i++){
+//   const mountainSideTexture = new THREE.MeshBasicMaterial({
+//     map: new THREE.TextureLoader().load( mountainPrefix + insideDirections[i] + jpgSuffix ),
+//     side: THREE.BackSide
+//   })
+
+//   materialArrayMountains.push(mountainSideTexture);
+// }
+
+
+// const mountainBox = new THREE.Mesh( mountainGeometry, materialArrayMountains );
+// scene.add( mountainBox );
+
+// mountainBox.position.set(primerPlanetX, 0, 0);
 
 
 
@@ -212,6 +267,10 @@ const animate = function () {
     primerPlanet.position.x = 20*(Math.cos(starBlinker/100-0.4));
     primerPlanet.position.y = 5*(Math.sin(starBlinker/100));
     primerPlanet.position.z = 20*(Math.sin(starBlinker/100));
+
+    twentythreePlanet.position.x = -50*(Math.cos(starBlinker/100));
+    twentythreePlanet.position.y = 19*(Math.sin(starBlinker/100));
+    twentythreePlanet.position.z = 50*(Math.sin(starBlinker/100-0.4));
 
     controls.update(2);
     requestAnimationFrame(animate);
@@ -332,7 +391,6 @@ function onClick( event ) {
 
 	} else if (intersects[i].object == sun){
     alert("sun")
-    scene.background = sunTexture;
 
   }
 
