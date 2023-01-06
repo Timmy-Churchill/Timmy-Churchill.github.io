@@ -1,6 +1,6 @@
 {
   "name": "vite-project",
-  "homepage":"https://timmy-churchill.github.io/",
+  "homepage": "https://timmy-churchill.github.io/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -13,6 +13,19 @@
     "vite": "^3.0.7"
   },
   "dependencies": {
+    "firebase": "^9.12.1",
     "three": "^0.143.0"
-  }
+  },
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Timmy-Churchill/myThreeJs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Timmy-Churchill/myThreeJs/issues"
+  },
+  "description": ""
 }

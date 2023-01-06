@@ -392,6 +392,7 @@ function onClick( event ) {
 
 	} else if (intersects[i].object == sun){
     alert("sun")
+    
 
   }
 
